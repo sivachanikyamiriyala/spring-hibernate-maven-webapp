@@ -45,6 +45,20 @@ pipeline
     sh 'mvn compile sonar:sonar'
    }
   }
+  stage('package')
+  {
+  steps
+  { 
+   sh 'mvn package'
+  }
+  }
+  stage('nexus uploader')
+  {
+  steps
+  {
+   nexusArtifactUploader artifacts: [[artifactId: '**/*.war', classifier: '', file: '/var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.8.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo2', nexusUrl: '54.80.208.32:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo2', version: '$BUILD_ID'
+  }
+  }
   stage('continuous deployment')
   {
   steps

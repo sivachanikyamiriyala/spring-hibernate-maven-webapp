@@ -56,14 +56,14 @@ pipeline
   {
   steps
   {
-   nexusArtifactUploader artifacts: [[artifactId: '**/*.war', classifier: '', file: '/var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.8.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo2', nexusUrl: '54.80.208.32:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo2', version: '$BUILD_ID'
+   nexusArtifactUploader artifacts: [[artifactId: '**/*.war', classifier: '', file: '/var/lib/jenkins/workspace/declarativepipeline_master/target/SpringHibernateExample-2.0.8.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo2', nexusUrl: '54.80.208.32:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo2', version: '$BUILD_ID'
   }
   }
   stage('continuous deployment')
   {
   steps
   {
-   sh 'scp /var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.8.war centos@10.1.2.100:/home/centos/apache-tomcat-7.0.94/webapps/siva3.war'
+   sh 'scp /var/lib/jenkins/workspace/declarativepipeline_master/target/SpringHibernateExample-2.0.8.war centos@10.1.2.100:/home/centos/apache-tomcat-7.0.94/webapps/ram1.war'
   }
   }
   stage('continuous test')
@@ -78,7 +78,7 @@ pipeline
  {
  success
  {
-   sh 'scp /var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.8.war centos@10.1.1.100:/home/centos/apache-tomcat-7.0.94/webapps/siva4.war'
+   sh 'scp /var/lib/jenkins/workspace/declarativepipeline_master/target/SpringHibernateExample-2.0.8.war centos@10.1.1.100:/home/centos/apache-tomcat-7.0.94/webapps/ram2.war'
  }
  failure
  {

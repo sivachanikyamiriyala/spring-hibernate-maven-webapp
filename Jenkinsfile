@@ -36,4 +36,13 @@ stage('continuous deployment to testing servers')
 {
  sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.8.war centos@10.1.2.100:/home/centos/apache-tomcat-7.0.94/webapps/siva1.war'
 }
+ stage('continuous testing')
+ {
+  git 'https://github.com/sivachanikyamiriyala/FunctionalTesting.git'
+ }
+ stage('continuous delivery')
+ {
+  input message: 'waiting for the approval', submitter: 'ravi'
+ sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.8.war centos@10.1.1.100:/home/centos/apache-tomcat-7.0.94/webapps/siva2.war'
+ }
 }

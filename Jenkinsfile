@@ -20,4 +20,12 @@ node('master')
  {
   sh 'mvn javadoc:javadoc'
  }
+ stage('continuous static code analysis')
+ {
+  sh 'mvn compile sonar:sonar'
+ }
+ stage('continuous build and release to nexus')
+ {
+  sh 'mvn package'
+ }
 }

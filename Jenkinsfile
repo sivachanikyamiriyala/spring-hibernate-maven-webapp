@@ -14,7 +14,7 @@ pipeline
   {
    steps
    {
-    sh 'mvn validate compile')
+    sh 'mvn validate compile'
    }
   }
   stage('testing unit testin')

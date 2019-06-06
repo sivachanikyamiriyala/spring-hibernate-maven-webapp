@@ -8,7 +8,7 @@ node('master')
  {
   sh 'mvn validate compile'
  }
- stage('continuous unit testing'0
+ stage('continuous unit testing')
  {
   sh 'mvn test'
  }

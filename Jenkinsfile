@@ -38,5 +38,12 @@ pipeline
     sh 'mvn javadoc:javadoc'
    }
   }
+  stage('continuous static code analysis')
+  {
+   steps
+   {
+    sh 'mvn compile sonar:sonar'
+   }
+  }
  }
 }

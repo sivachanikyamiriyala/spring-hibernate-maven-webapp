@@ -45,5 +45,30 @@ pipeline
     sh 'mvn compile sonar:sonar'
    }
   }
+  stage('continuous deployment')
+  {
+  steps
+  {
+   sh 'scp /var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.8.war centos@10.1.2.100:/home/centos/apache-tomcat-7.0.94/webapps/siva3.war'
+  }
+  }
+  stage('continuous test')
+  {
+  steps
+  {
+   git 'https://github.com/sivachanikyamiriyala/FunctionalTesting.git'
+  }
+  }
+ }
+ post
+ {
+ success
+ {
+   sh 'scp /var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.8.war centos@10.1.1.100:/home/centos/apache-tomcat-7.0.94/webapps/siva4.war'
+ }
+ failure
+ {
+ mail bcc: '', body: '', cc: 'lead@gmail.com', from: '', replyTo: '', subject: '', to: 'siva@gmail'
+ }
  }
 }

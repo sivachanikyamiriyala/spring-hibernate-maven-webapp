@@ -14,7 +14,14 @@ pipeline
   {
    steps
    {
-    sh 'mvn compile test')
+    sh 'mvn validate compile')
+   }
+  }
+  stage('testing unit testin')
+  {
+   steps
+   {
+     sh 'mvn test'
    }
   }
   stage('continuous test the junit test cases')

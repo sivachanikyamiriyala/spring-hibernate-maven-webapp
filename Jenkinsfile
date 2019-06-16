@@ -36,5 +36,8 @@ node('master')
   {
     sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.171:/home/centos/apache-tomcat-7.0.94/webapps/q1.war'
   }
-
+  stage('continuus delivery to prod')
+  {
+    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.162://home/centos/apache-tomcat-7.0.94/webapps/q2.war'
+  }
 }

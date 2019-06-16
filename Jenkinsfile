@@ -6,7 +6,7 @@ node('master')
   }
   stage('continuous validate and compile')
   {
-    sh 'mvn valiadate compile'
+    sh 'mvn validate compile'
   }
   stage('continuous teting the unit test caess')
   {

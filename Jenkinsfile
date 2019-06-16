@@ -24,7 +24,7 @@
         sh 'mvn test'
       }
     }
-    stge('continuous code coverage')
+    stage('continuous code coverage')
     {
       steps
       {

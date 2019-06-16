@@ -1,88 +1,35 @@
-pipeline
+node('master')
 {
- agent any
- stages
- {
-  stage('continuous download')
+  stage('continuous download,valiadate and ocmpile code')
   {
-   steps
-   {
-     git credentialsId: 'githubcredentialsoftheproject', url: 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'
-   }
+    git credentialsId: 'githubcredentials', url: 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'
   }
-  stage('continuous validatae compile test')
+  stage('continuous validate and compile')
   {
-   steps
-   {
-    sh 'mvn validate compile'
-   }
+    sh 'mvn valiadate compile'
   }
-  stage('testing unit testin')
+  stage('continuous teting the unit test caess')
   {
-   steps
-   {
-     sh 'mvn test'
-   }
+    sh 'mvn test'
   }
-  stage('continuous test the junit test cases')
+  stage('continuous cobertutura report generation')
   {
-   steps
-   {
     sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-   }
   }
-  stage('documentation')
+  stage('continuous preparation of documentattoj')
   {
-   steps
-   {
     sh 'mvn javadoc:javadoc'
-   }
   }
   stage('continuous static code analysis')
   {
-   steps
-   {
     sh 'mvn compile sonar:sonar'
-   }
   }
-  stage('package')
+  stage('package and release to nexus')
   {
-  steps
-  { 
-   sh 'mvn package'
+    sh 'mvn package'
   }
-  }
-  stage('nexus uploader')
+  staeg('nexus release')
   {
-  steps
-  {
-   nexusArtifactUploader artifacts: [[artifactId: '**/*.war', classifier: '', file: '/var/lib/jenkins/workspace/multibranch_master/target/SpringHibernateExample-2.0.8.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo2', nexusUrl: '54.80.208.32:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo2', version: '$BUILD_ID'
+    nexusArtifactUploader artifacts: [[artifactId: '**/*.war', classifier: '', file: '/var/lib/jenkins/workspace/scriptedpipeline/target/*.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo', nexusUrl: '34.238.118.17:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$BUILD_ID'
   }
-  }
-  stage('continuous deployment')
-  {
-  steps
-  {
-   sh 'scp /var/lib/jenkins/workspace/multibranch_master/target/SpringHibernateExample-2.0.8.war centos@10.1.2.100:/home/centos/apache-tomcat-7.0.94/webapps/ram1.war'
-  }
-  }
-  stage('continuous test')
-  {
-  steps
-  {
-   git 'https://github.com/sivachanikyamiriyala/FunctionalTesting.git'
-  }
-  }
- }
- post
- {
- success
- {
-   sh 'scp /var/lib/jenkins/workspace/multibranch_master/target/SpringHibernateExample-2.0.8.war centos@10.1.1.100:/home/centos/apache-tomcat-7.0.94/webapps/ram2.war'
- }
- failure
- {
- mail bcc: '', body: '', cc: 'lead@gmail.com', from: '', replyTo: '', subject: '', to: 'siva@gmail'
- }
- }
 }

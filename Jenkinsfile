@@ -24,7 +24,7 @@
         sh 'mvn test'
       }
     }
-    stage('continuous code coverage')
+    stge('continuous code coverage')
     {
       steps
       {
@@ -43,6 +43,13 @@
       steps 
       {
         sh 'mvn compile sonar:sonar'
+      }
+    }
+    stage('continous build')
+    {
+      steps
+      {
+        sh 'mvn package'
       }
     }
 

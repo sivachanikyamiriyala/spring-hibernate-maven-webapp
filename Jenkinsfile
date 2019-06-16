@@ -6,7 +6,7 @@ node('master')
   }
   stage('continuous validate and compile')
   {
-    sh 'mvn validate compie'
+    sh 'mvn validate compile'
   }
   stage('continuous testing of junit test cases')
   {
@@ -24,9 +24,13 @@ node('master')
   {
     sh 'mvn compile sonar:sonar'
   }
+<<<<<<< HEAD
   stage('continuous build')
   {
     sh 'mvn package'
   }
 
 }
+=======
+}
+>>>>>>> 031b4edc4560bdf7bbd6304e5e5577be721e8c41

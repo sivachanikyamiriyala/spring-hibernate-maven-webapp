@@ -24,4 +24,9 @@ node('master')
   {
     sh 'mvn compile sonar:sonar'
   }
+  stage('continuous build')
+  {
+    sh 'mvn package'
+  }
+
 }

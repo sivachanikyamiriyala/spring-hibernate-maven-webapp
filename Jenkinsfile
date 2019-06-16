@@ -6,7 +6,7 @@ node('master')
   }
   stage('continuous validate and compile')
   {
-    sh 'mvn validate compie'
+    sh 'mvn validate compile'
   }
   stage('continuous testing of junit test cases')
   {

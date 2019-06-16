@@ -6,7 +6,7 @@ node('master')
   }
   stage('continuous validate and compile')
   {
-    sh 'mvn validate compile'
+    sh 'mvn validate compie'
   }
   stage('continuous testing of junit test cases')
   {
@@ -27,6 +27,10 @@ node('master')
   stage('continuous build')
   {
     sh 'mvn package'
+  }
+  stage('nexus release')
+  {
+    nexusArtifactUploader artifacts: [[artifactId: 'SpringHibernateExample-2.0.2.war', classifier: '', file: '/var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war', type: 'war']], credentialsId: 'nexus--credentials', groupId: 'repo', nexusUrl: '3.82.249.140:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$(BUILD_ID)'
   }
 
 }

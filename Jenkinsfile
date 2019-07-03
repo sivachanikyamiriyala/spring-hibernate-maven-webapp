@@ -1,6 +1,5 @@
-
 node('master')
-{
+   {
     stage('continuous download')
     {
         git credentialsId: 'githubcredentials', url: 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'

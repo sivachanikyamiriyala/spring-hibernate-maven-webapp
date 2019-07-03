@@ -1,44 +1,40 @@
-node('master')
-   {
-    stage('continuous download')
+pipeline 
+{
+    agent any
     {
-        git credentialsId: 'githubcredentials', url: 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'
+        stages
+        {
+            stage('continuous download')
+            {
+                steps
+                {
+                    git credentialsId: 'githubcredentials', url: 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'
+                }
+            }
+            stage('validate compile and test')
+            {
+                steps
+                {
+                    sh 'mvn validate compile test'
+                }
+            }
+            stage('cobertura and javaodc')
+            {
+                steps
+                {
+                    sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml javadoc:javadoc'
+                }
+            }
+            stage('contin build')
+            {
+                steps
+                {
+                    sh 'mvn package'
+                }
+            }
+            
+            
+        }
     }
-    stage('validate and compile')
-    {
-        sh 'mvn validate compile'
-    }
-    stage('continuous junit testing')
-    {
-        sh 'mvn test'
-    }
-    stage('continuous cobertura')
-    {
-        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-    }
-    stage('continuous documentationpreparation')
-    {
-        sh 'mvn javadoc:javadoc'
-    }
-    stage('static code analysis')
-    {
-        sh 'mvn compile sonar:sonar'
-    }
-    stage('continuous build')
-    {
-        sh 'mvn package'
-    }
-    stage('nexus release ')
-    {
-     nexusArtifactUploader artifacts: [[artifactId: 'SpringHibernateExample-2.0.2.war', classifier: '', file: '/var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo', nexusUrl: '54.235.232.205:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$BUILD_ID'
-    }
-   stage('continuous deployment to tomcat qaserver')
-   {
-    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.163:/home/centos/apache-tomcat-7.0.94/webapps/script1.war'
-   }
-   stage('continuous delivery')
-   {
-    input message: 'waiting gor the approval from the delivery team', submitter: 'ravi'
-    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.108:/home/centos/apache-tomcat-7.0.94/webapps/script2.war'
-  }
+
 }

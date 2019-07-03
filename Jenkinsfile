@@ -1,72 +1,32 @@
- pipeline
+
+node('master')
 {
-  agent any
-  stages
-  {
-    stage('continous download')
+    stage('continuous download')
     {
-      steps
-      {
-        git 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'
-      }
+        git credentialsId: 'githubcredentials', url: 'https://github.com/sivachanikyamiriyala/spring-hibernate-maven-webapp.git'
     }
-    stage('continous validata and compile')
+    stage('validate and compile')
     {
-      steps
-      {
         sh 'mvn validate compile'
-      }
     }
-    stage('continuous test')
+    stage('continuous junit testing')
     {
-      steps
-      {
         sh 'mvn test'
-      }
     }
-    stage('continuous code coverage')
+    stage('continuous cobertura')
     {
-      steps
-      {
-        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-      }
+        sh 'cobertura:cobertura -Dcobertura.report.format=xml'
     }
-    stage('continous documentation preparation')
+    stage('continuous documentationpreparation')
     {
-      steps
-      {
-        sh 'mvn javadoc:javadoc'
-      }
+        sh 'javadoc:javadoc'
     }
     stage('static code analysis')
     {
-      steps 
-      {
-        sh 'mvn compile sonar:sonar'
-      }
+        sh 'compile sonar:sonar'
     }
-    stage('continous build')
+    stage('continuous build')
     {
-      steps
-      {
         sh 'mvn package'
-      }
     }
-    stage('nexus release')
-    {
-      steps
-      {
-        nexusArtifactUploader artifacts: [[artifactId: 'SpringHibernateExample-2.0.2.war', classifier: '', file: '/var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.2.war', type: 'war']], credentialsId: 'nexus--credentials', groupId: 'repo', nexusUrl: '3.82.249.140:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$BUILD_ID'
-      }
-    }
-    stage('deplot to qaserver')
-    {
-      steps
-      {
-        sh 'scp /var/lib/jenkins/workspace/declarativepipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.171:/home/centos/apache-tomcat-7.0.94/webapps/z.war'
-      }
-    }
-    
-
-  }
 }

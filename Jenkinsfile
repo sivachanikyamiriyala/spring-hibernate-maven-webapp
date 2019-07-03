@@ -14,15 +14,15 @@ node('master')
     }
     stage('continuous cobertura')
     {
-        sh 'cobertura:cobertura -Dcobertura.report.format=xml'
+        sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
     }
     stage('continuous documentationpreparation')
     {
-        sh 'javadoc:javadoc'
+        sh 'mvn javadoc:javadoc'
     }
     stage('static code analysis')
     {
-        sh 'compile sonar:sonar'
+        sh 'mvn compile sonar:sonar'
     }
     stage('continuous build')
     {

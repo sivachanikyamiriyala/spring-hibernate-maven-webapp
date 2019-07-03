@@ -32,4 +32,13 @@ node('master')
     {
      nexusArtifactUploader artifacts: [[artifactId: 'SpringHibernateExample-2.0.2.war', classifier: '', file: '/var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo', nexusUrl: '54.235.232.205:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$BUILD_ID'
     }
+   stage('continuous deployment to tomcat qaserver')
+   {
+    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.163:/home/centos/apache-tomcat-7.0.94/webapps/script1.war'
+   }
+   stage('continuous delivery')
+   {
+    input message: 'waiting gor the approval from the delivery team', submitter: 'ravi'
+    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.2.war centos@10.1.1.108:/home/centos/apache-tomcat-7.0.94/webapps/script2.war'
+  }
 }

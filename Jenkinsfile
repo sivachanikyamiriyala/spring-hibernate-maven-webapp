@@ -26,7 +26,7 @@ node('master')
  }
   stage('deploymet to nexus')
   {
-  nexusArtifactUploader artifacts: [[artifactId: 'SpringHibernateExample-2.0.3.war', classifier: '', file: '/var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.3.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo', nexusUrl: '54.172.130.5:8081', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$BUILD_ID'
+   nexusArtifactUploader artifacts: [[artifactId: 'SpringHibernateExample-2.0.3.war', classifier: '', file: '/var/lib/jenkins/workspace/scriptedpipeline/target/SpringHibernateExample-2.0.3.war', type: 'war']], credentialsId: 'nexuscredentials', groupId: 'repo', nexusUrl: '54.172.130.5:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'repo', version: '$BUILD_ID'
   }
   stage('deployment to testing servers')
   {

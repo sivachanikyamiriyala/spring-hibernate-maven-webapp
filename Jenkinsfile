@@ -10,7 +10,7 @@ node('master')
  }
  stage('staticcode')
  {
-  sh 'mvn sonar:sonar \-Dsonar.host.url=http://54.172.130.5:9000 \-Dsonar.login=2aa90c4891b2aefa17abd2c11cb4f642ee600832'
+  sh 'mvn sonar:sonar'
  }
  stage('test')
  { 

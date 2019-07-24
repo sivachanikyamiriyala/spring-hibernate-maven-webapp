@@ -45,12 +45,5 @@ stages
   sh 'mvn package'
   }
   }
-  stage('nexus artifact uploader')
-  {
-  steps
-  {
-
-  }
-  }
  }
 }

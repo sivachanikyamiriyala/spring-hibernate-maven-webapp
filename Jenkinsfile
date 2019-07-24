@@ -18,7 +18,7 @@ node('master')
  }
  stage('cobertura')
  {
-  sh 'cobertura:cobertura -Dcobertura.report.format=xml'
+  sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
  }
  stage('package')
  {

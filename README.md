@@ -1,5 +1,7 @@
 ## Maven project with integration of Spring and Hibernate 
 malliiiiiiiiibbbbhhbchwwb;;sjd;sd
+iiiiiiiibbbbhhbchwwb;;sjd;sd
+>>>>>>> ce2802bf270562280768a572efdb3d22c33452a2
 iiiiihhhyyyyyy
 Goal: The purpose of this project is to test CI-CD Pipeline setup with Jenkins Automation Server.
 
